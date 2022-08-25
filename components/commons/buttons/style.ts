@@ -4,6 +4,7 @@ export const StyledButton = styled.button<{
     bgColor: string;
     hoverColor: string;
     focusColor: string;
+    width: string;
 }>`
     padding: 9px 15px;
     background-color: ${({ theme, bgColor }) =>
@@ -24,9 +25,10 @@ export const StyledButton = styled.button<{
 
     display: flex;
     align-items: center;
-    /* space between itens*/
+    justify-content: center;
     gap: 10px;
     cursor: pointer;
     font-size: 13px;
     font-weight: ${({ theme }) => theme.fontWeight.bold};
+    width: ${({ width }) => width};
 `;

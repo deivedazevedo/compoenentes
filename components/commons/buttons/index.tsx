@@ -10,7 +10,7 @@ import { StyledButton } from "./style";
 
 const importButtonIcon = (iconName: string) => {
     return lazy(() =>
-        import(`../../../assets/svgs/${iconName}`).catch(() => {
+        import(`@assets/svgs/${iconName}`).catch(() => {
             throw new Error("An error occurred. Please try again");
         })
     );
@@ -36,15 +36,19 @@ const VARIANT_CONFIG = {
 
 type PropTypes = {
     text: string;
-    width?: "max-content" | "full";
+    width?: "auto" | "full" | string;
     color?: string;
     icon?: string | undefined;
     alignIcon?: "left" | "right" | "none";
     disabled?: boolean;
     onClick?: () => void;
     onFocus?: () => void;
-    type?: string;
     variant: string;
+};
+
+const CSS_WIDTH_PROPERTY = {
+    auto: "max-content",
+    full: "100%"
 };
 
 const Button = ({
@@ -56,7 +60,6 @@ const Button = ({
     disabled = false,
     onClick,
     onFocus,
-    type = "button",
     variant = "primary"
 }: PropTypes): ReactElement => {
     const [btnIcon, setBtnIcon] = useState<ReactElement | undefined>(undefined);
@@ -64,7 +67,6 @@ const Button = ({
     const handleImport = useCallback(
         async (iconName: string): Promise<ReactElement> => {
             const IconComponent = await importButtonIcon(iconName);
-            // @ts-ignore
             return <IconComponent color={color} />;
         },
         [color]
@@ -86,12 +88,17 @@ const Button = ({
 
     return (
         <StyledButton
-            width={width}
+            width={
+                width === "auto" || width === "full"
+                    ? CSS_WIDTH_PROPERTY[
+                          width as keyof typeof CSS_WIDTH_PROPERTY
+                      ]
+                    : width
+            }
             color={color}
             disabled={disabled}
             onClick={onClick}
             onFocus={onFocus}
-            type={type}
             bgColor={
                 VARIANT_CONFIG[variant as keyof typeof VARIANT_CONFIG].bgColor
             }
