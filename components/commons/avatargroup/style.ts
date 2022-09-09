@@ -17,6 +17,7 @@ export const AvatarContainer = styled.div`
 
 export const Avatar = styled(AvatarAntd)<{
     index: number;
+    length: number;
     borderColor: string;
 }>`
     &&& {
@@ -32,6 +33,7 @@ export const Avatar = styled(AvatarAntd)<{
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: ${({ index }) => (index == 0 ? "0px" : "-13px")};
+        margin-left: ${({ index, length }) =>
+            index == 0 || index == length - 1 ? "0px" : "-13px"};
     }
 `;

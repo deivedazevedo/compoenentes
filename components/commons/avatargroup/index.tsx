@@ -1,7 +1,6 @@
-import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
-import { AvatarProps, Divider, Tooltip } from "antd";
 import React, { ReactElement, ReactFragment, lazy } from "react";
 import { Avatar, Title, AvatarContainer } from "./style";
+import HoverCard from "../hovercard";
 
 interface IAvatar {
     firstName: string;
@@ -17,20 +16,9 @@ interface IAvatarGroup {
     avatars: Array<IAvatar>;
 }
 
-const RenderAvatar = (avatars: Array<IAvatar>) =>
-    avatars.map((element, index) => {
-        return (
-            <Avatar
-                key={index}
-                index={index}
-                src={element.photo}
-                borderColor={element.isOnline ? "greenA700" : "gray110"}
-            >
-                {element.firstName[0]}
-                {element.lastName[0]}
-            </Avatar>
-        );
-    });
+const Error = () => {
+    console.log("error");
+};
 
 const AvatarGroup = ({
     title,
@@ -38,6 +26,21 @@ const AvatarGroup = ({
     size,
     avatars
 }: IAvatarGroup): ReactElement => {
+    const getParameters = (avatar, index, length) => {
+        const parameters = {
+            key: index,
+            index,
+            borderColor: avatar.isOnline ? "greenA700" : "gray110",
+            length
+        };
+        if (avatar.photo) {
+            Object.assign(parameters, {
+                src: avatar.photo
+            });
+        }
+        return parameters;
+    };
+    var t;
     return (
         <AvatarContainer>
             <Title>{title}</Title>
@@ -53,8 +56,26 @@ const AvatarGroup = ({
                     marginLeft: "-12px"
                 }}
             >
-                {RenderAvatar(avatars)}
+                {
+                    (t = avatars.map((element, index) => {
+                        return (
+                            <>
+                                <Avatar
+                                    {...getParameters(
+                                        element,
+                                        index,
+                                        avatars.length
+                                    )}
+                                >
+                                    {element.firstName?.charAt(0).toUpperCase()}
+                                    {element.lastName?.charAt(0).toUpperCase()}
+                                </Avatar>
+                            </>
+                        );
+                    }))
+                }
             </Avatar.Group>
+            <HoverCard>{t[0]}</HoverCard>
         </AvatarContainer>
     );
 };
