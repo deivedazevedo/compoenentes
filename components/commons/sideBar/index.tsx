@@ -1,13 +1,25 @@
 import { Children, ReactElement, ReactNode } from "react";
 import { displayPartsToString } from "typescript";
-import { Side, SideIcon, SideItem, SideLastItem, SideText } from "./styles";
+import {
+    Side,
+    SideIcon,
+    SideItem,
+    SideLastItem,
+    SideText,
+    SideTitle
+} from "./styles";
 
 type SideBarPropTypes = {
     children: ReactNode;
 };
 
 const SideBar = ({ children }: SideBarPropTypes): ReactElement => {
-    return <Side>{children}</Side>;
+    return (
+        <Side>
+            {/* <h2>Soluções</h2> */}
+            {children}
+        </Side>
+    );
 };
 
 type ItemTextPropTypes = {
@@ -37,6 +49,13 @@ const Item = ({ children }: ItemPropTypes): ReactElement => {
 const LastItem = ({ children }: ItemPropTypes): ReactElement => {
     return <SideLastItem>{children}</SideLastItem>;
 };
+
+const Title = ({ text }: ItemTextPropTypes): ReactElement => {
+    return <SideTitle>{text}</SideTitle>;
+};
+
+Title.displayName = "Title";
+SideBar.Title = Title;
 
 ItemText.displayName = "ItemText";
 SideBar.ItemText = ItemText;

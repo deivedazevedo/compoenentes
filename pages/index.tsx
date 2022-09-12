@@ -14,6 +14,7 @@ import RefrigeredEnvironments from "@assets/svgs/RefrigeredEnvironments";
 import CentralAir from "@assets/svgs/CentralAir";
 import Leaks from "@assets/svgs/Leaks";
 import Config from "@assets/svgs/Config";
+import { SideItem } from "components/commons/sideBar/styles";
 
 const Home = (): ReactElement => {
     return (
@@ -24,6 +25,7 @@ const Home = (): ReactElement => {
 
             <main style={{ display: "100%" }}>
                 <SideBar>
+                    <SideBar.Title text="Soluções" />
                     <SideBar.Item>
                         <SideBar.ItemIcon>
                             <Energy />
@@ -65,7 +67,7 @@ const Home = (): ReactElement => {
                         <SideBar.ItemIcon>
                             <Config />
                         </SideBar.ItemIcon>
-                        <SideBar.ItemText text="Vazamentos" />
+                        <SideBar.ItemText text="Configurações" />
                     </SideBar.LastItem>
                 </SideBar>
             </main>
