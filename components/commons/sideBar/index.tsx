@@ -1,25 +1,15 @@
-import { Children, ReactElement, ReactNode } from "react";
-import { displayPartsToString } from "typescript";
-import {
-    Side,
-    SideIcon,
-    SideItem,
-    SideLastItem,
-    SideText,
-    SideTitle
-} from "./styles";
+import Link from "next/link";
+import { ReactElement, ReactNode, useState } from "react";
+import { Side, SideIcon, SideItem, SideText, SideTitle } from "./styles";
 
 type SideBarPropTypes = {
     children: ReactNode;
 };
 
 const SideBar = ({ children }: SideBarPropTypes): ReactElement => {
-    return (
-        <Side>
-            {/* <h2>Soluções</h2> */}
-            {children}
-        </Side>
-    );
+    const [state, setState] = useState("Closed");
+
+    return <Side data-state={state}>{children}</Side>;
 };
 
 type ItemTextPropTypes = {
@@ -39,15 +29,16 @@ const ItemIcon = ({ children }: ItemIconPropTypes): ReactElement => {
 };
 
 type ItemPropTypes = {
+    href: string;
     children: ReactNode | ReactNode[];
 };
 
-const Item = ({ children }: ItemPropTypes): ReactElement => {
-    return <SideItem>{children}</SideItem>;
-};
-
-const LastItem = ({ children }: ItemPropTypes): ReactElement => {
-    return <SideLastItem>{children}</SideLastItem>;
+const Item = ({ children, href }: ItemPropTypes): ReactElement => {
+    return (
+        <Link href={href}>
+            <SideItem>{children}</SideItem>
+        </Link>
+    );
 };
 
 const Title = ({ text }: ItemTextPropTypes): ReactElement => {
@@ -65,8 +56,5 @@ SideBar.ItemIcon = ItemIcon;
 
 Item.displayName = "Item";
 SideBar.Item = Item;
-
-LastItem.displayName = "LastItem";
-SideBar.LastItem = LastItem;
 
 export default SideBar;
