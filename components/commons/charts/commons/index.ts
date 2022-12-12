@@ -37,7 +37,6 @@ interface GraphicsTemplate {
                 format: string;
             };
             color: string;
-            colorAxis: {};
         };
     };
     series?: Array<object>;
@@ -48,18 +47,18 @@ interface GraphicsTemplate {
 
 export type CreateTemplateArgs = {
     chartType: "column" | "bar" | "columnrange";
-    zoomType: "y";
+    zoomType?: "y";
     title: string;
     subtitle: string | undefined;
     xAxisCategories: Array<any>;
     xAxisCrossHair: boolean;
     yAxisTitle: string;
-    yAxisUseHTML: boolean;
-    tooltipHeaderFormat: string;
-    tooltipPointFormat: string;
-    tooltipFooterFormat: string;
-    tooltipShared: boolean;
-    tooltipUseHTML: boolean;
+    yAxisUseHTML?: boolean;
+    tooltipHeaderFormat?: string;
+    tooltipPointFormat?: string;
+    tooltipFooterFormat?: string;
+    tooltipShared?: boolean;
+    tooltipUseHTML?: boolean;
     plotOptionsPointPadding?: number;
     plotOptionsBorderWidth?: number;
     plotOptionsDataLabelEnable?: boolean;
@@ -122,7 +121,11 @@ const Template = ({
             column: {
                 borderWidth: plotOptionsBorderWidth,
                 pointPadding: plotOptionsPointPadding,
-                color: plotOptionsColor
+                color: plotOptionsColor,
+                dataLabels: {
+                    enabled: plotOptionsDataLabelEnable,
+                    format: plotOptionsDataLabelFormat
+                }
             }
         },
         series: series,
